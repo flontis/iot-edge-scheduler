@@ -3,31 +3,48 @@ package sensor;
 
 import java.util.Random;
 import java.util.UUID;
+//todo comments
+
+public class Sensor implements Runnable {
+
+    private int N;
+    private UUID sensorID;
+
+    public int getN() {
+        return N;
+    }
+
+    public void setN(int n) {
+        N = n;
+    }
+
+    public Sensor(int N) throws InterruptedException {
+
+        this.sensorID = UUID.randomUUID();
+        this.N = N;
 
 
+    }
 
-public class Sensor {
 
-    public Sensor() throws InterruptedException {
-
-        UUID sensorID = UUID.randomUUID();
+    @Override
+    public void run() {
+        long taskTime;
         // use gaussian distributed values
         Random r = new Random();
-        //n values per second
-        int N = 2;
-        long taskTime;
-        // ratio of sleep time
-        long sleepTime = 1000/N;
+
         while (true) {
+            long sleepTime = 1000 / this.N;
             taskTime = System.currentTimeMillis();
-            System.out.println(sensorID + ": " + r.nextGaussian());
-            taskTime = System.currentTimeMillis()-taskTime;
-            if (sleepTime-taskTime > 0 ) {
-                Thread.sleep(sleepTime-taskTime);
+            System.out.println(sensorID + " produced: " + r.nextGaussian());
+            taskTime = System.currentTimeMillis() - taskTime;
+            if (sleepTime - taskTime > 0) {
+                try {
+                    Thread.sleep(sleepTime - taskTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
-
-
-
     }
 }

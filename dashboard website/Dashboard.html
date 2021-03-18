@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard for the IoT Edge Scheduler Project</title>
+    <script src="webserver.js"></script>
+</head>
+<body>
+<h1>Hello, World! Hello, User!</h1>
+<text>Please, provide me some details for deployment, e.g. how many sensors, Edge Nodes and Edge Services. <br> Unfortunately, I currently only
+    support the sensors.</text>
+<br>
+<br>
+<form>
+    Number of sensors:<br> <input type="number" name="sensorNumber" id="sensorNumberField">
+</form>
+<button type="submit" onclick="getSensorNumber()">Send</button>
+<br>
+<form>
+    Frequency of sensors:<br> <input type="number" name="sensorNumber" id="frequencyField">
+</form>
+<button type="submit" onclick="sendFrequency()">Send</button>
+</body>
+</html>
