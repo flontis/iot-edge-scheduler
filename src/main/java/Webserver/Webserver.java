@@ -43,7 +43,7 @@ public class Webserver extends WebSocketServer {
         switch (messageArray[0]) {
             case "Sensors:":
                 //todo pass auf, dass immer die total number of sensors gesetzt wird, sodass du nicht ewig addest, sondern auch sensors gestoppt werden
-                // ggf. Paare aus Sensoren und Threads, um die Threads zu stoppen
+                // ggf. Paare aus Sensoren und Threads, um die Threads zu stoppen test
                 for (i = 0; i < Integer.parseInt(messageArray[1]); i++) {
                     try {
                         Sensor sensor = new Sensor(2);
