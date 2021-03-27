@@ -1,4 +1,4 @@
-package sensor;
+package Testclasses.sensor;
 
 
 import java.util.Random;

@@ -3,7 +3,7 @@ package Webserver;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
-import sensor.Sensor;
+import Testclasses.sensor.Sensor;
 
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
