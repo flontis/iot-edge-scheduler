@@ -1,10 +1,11 @@
-package ResourceAdministrator;
+package ResourceAdministrator.requester;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.api.model.Statistics;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.InvocationBuilder;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -37,23 +38,8 @@ public class DockerMemRequester {
         return sum;
     }
 
-    public String getMemoryUsageOfContainer(String containerID) {
-//        List<Container> containers = dockerClient.listContainersCmd()
-//                .withShowSize(true)
-//                .withShowAll(true)
-//                .withStatusFilter(Arrays.asList("running"))
-//                .exec();
-//        for (Container c : containers) {
-//            InvocationBuilder.AsyncResultCallback<Statistics> callback = new InvocationBuilder.AsyncResultCallback<>();
-//            dockerClient.statsCmd(c.getId()).exec(callback);
-//            Statistics stats;
-//            try {
-//                stats = callback.awaitResult();
-//                callback.close();
-//            } catch (RuntimeException | IOException e) {
-//                e.printStackTrace();// you may want to throw an exception here
-//            }
-//        }
+    public JSONObject getMemoryUsageOfContainer(String containerID) {
+
         InvocationBuilder.AsyncResultCallback<Statistics> callback = new InvocationBuilder.AsyncResultCallback<>();
         dockerClient.statsCmd(containerID).exec(callback);
         Statistics stats = null;
@@ -66,21 +52,25 @@ public class DockerMemRequester {
         long memusage = memorySum(stats);
         double percentage = memUsagePercentage(stats);
         //System.out.println("memusage: " + memusage + ", percentage: " + String.format("%.02f", percentage) + "%");
-        return "memusage: " + memusage + ", percentage: " + String.format("%.02f", percentage) + "%";
+        JSONObject result = new JSONObject();
+        result.put("memUsage", memusage);
+        result.put("percentage", String.format("%.02f", percentage) + "%");
+        return result;
     }
 
-    public String getMemoryUsageOfAllContainers() {
-        String result = "";
+    public JSONObject getMemoryUsageOfAllContainers() {
+        JSONObject result = new JSONObject();
         List<Container> containers = dockerClient.listContainersCmd()
                 .withShowSize(true)
                 .withShowAll(true)
                 .withStatusFilter(Arrays.asList("running"))
                 .exec();
         for (Container c : containers) {
-        result = result.concat(c.getNames()[0] + ": " + getMemoryUsageOfContainer(c.getId())) + "\n";
+            result.put(c.getNames()[0], getMemoryUsageOfContainer(c.getId()));
+//        result = result.concat(c.getNames()[0] + ": " + getMemoryUsageOfContainer(c.getId())) + "\n";
 
         }
-        //System.out.println("result: " + result);
+        //TODO refactor to be in JSON format
         return result;
     }
 }
