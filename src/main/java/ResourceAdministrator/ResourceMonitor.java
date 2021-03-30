@@ -23,6 +23,7 @@ public class ResourceMonitor {
 
         // put requests in different threads to ensure they are made as close as possible together in time
         System.out.println(combined.toString(4));
+        //return combined;
     }
 
 }
