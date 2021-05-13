@@ -12,10 +12,12 @@ public class HostResourceRequester {
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();
         long availableMemory = hal.getMemory().getTotal();
+        long freeMem = hal.getMemory().getAvailable();
         long cpu = hal.getProcessor().getMaxFreq();
         int cores = hal.getProcessor().getLogicalProcessors().size();
         int co = hal.getProcessor().getPhysicalProcessorCount();
         json.put("maxMem", availableMemory);
+        json.put("freeMem", freeMem);
         json.put("cores", co);
         json.put("threads", cores);
         json.put("maxFrequency", cpu);

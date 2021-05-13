@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.HashSet;
 import java.util.Set;
+import org.json.JSONObject;
 
 public class TestWebServer extends WebSocketServer {
     private static final int TCP_PORT = 4444;
